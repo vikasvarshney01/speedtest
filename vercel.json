@@ -2,7 +2,7 @@
     "functions": {
       "api/upload.js": {
         "maxDuration": 10,
-        "maxMemory": 128
+        "maxMemory": 256
       }
     }
   }

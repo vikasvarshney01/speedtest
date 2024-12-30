@@ -22,10 +22,13 @@ document.getElementById('runTest').addEventListener('click', async () => {
   
       // Upload Speed Test
       const uploadStart = performance.now();
-      const uploadData = new Blob([new ArrayBuffer(2 * 1024 * 1024)]); // 2 MB
+      const uploadData = new Blob([new ArrayBuffer(5 * 1024 * 1024)]); // 2 MB
       const uploadResponse = await fetch('/api/upload', {
         method: 'POST',
         body: uploadData,
+        headers:{
+            'Content-Type':'application/octet-stream'
+        }
       });
       const uploadEnd = performance.now();
       const uploadResult = await uploadResponse.json();
