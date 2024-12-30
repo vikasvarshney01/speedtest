@@ -1,32 +1,30 @@
 export default async function handler(req, res) {
-    if (req.method == 'POST') {
-        res.status(200).json({ uploadSpeed: 100 }); // Dummy response for testing
-  } else {
-      res.status(405).json({ error: 'Method not allowed' });
-      return;
+    if (req.method !== 'POST') {
+      return res.status(405).json({ error: 'Method not allowed' });
     }
   
-    const startTime = Date.now();
-    let totalSize = 0;
+    let totalSize = 0; // Total uploaded size in bytes
+    const startTime = Date.now(); // Record the start time
   
+    // Listen for data chunks
     req.on('data', (chunk) => {
-      totalSize += chunk.length; // Accumulate the size of the uploaded data
+      totalSize += chunk.length;
     });
   
     req.on('end', () => {
-      const endTime = Date.now();
-      const durationSeconds = (endTime - startTime) / 1000; // Convert duration to seconds
-      const uploadSpeed = (totalSize * 8) / (durationSeconds * 1024 * 1024); // Calculate speed in Mbps
+      const endTime = Date.now(); // Record the end time
+      const durationSeconds = (endTime - startTime) / 1000; // Calculate duration in seconds
   
-      if (isNaN(uploadSpeed)) {
-        res.status(500).json({ error: 'Upload speed calculation failed' });
-      } else {
-        res.status(200).json({ uploadSpeed });
+      if (durationSeconds === 0 || totalSize === 0) {
+        return res.status(400).json({ error: 'No data received or invalid request' });
       }
+  
+      const uploadSpeed = (totalSize * 8) / (1024 * 1024 * durationSeconds); // Calculate upload speed in Mbps
+      return res.status(200).json({ uploadSpeed });
     });
   
     req.on('error', (err) => {
-      res.status(500).json({ error: 'An error occurred while receiving data', details: err.message });
+      return res.status(500).json({ error: 'Error during upload', details: err.message });
     });
   }
   
