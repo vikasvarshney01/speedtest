@@ -1,9 +1,8 @@
 {
-    "functions": {
+  "functions": {
       "api/upload.js": {
-        "maxDuration": 10,
-        "maxMemory": 256
+          "maxDuration": 10,
+          "maxMemory": 256
       }
-    }
   }
-  
+}
