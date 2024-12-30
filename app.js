@@ -21,7 +21,7 @@ document.getElementById('runTest').addEventListener('click', async () => {
   
     // Measure upload speed
     const uploadStart = performance.now();
-    const dataToUpload = new Blob([new ArrayBuffer(5 * 1024 * 1024)]); // 5 MB of data
+    const dataToUpload = new Blob([new ArrayBuffer(2 * 1024 * 1024)]); // 2 MB of data
     const uploadResponse = await fetch('/api/upload', {
       method: 'POST',
       body: dataToUpload,
