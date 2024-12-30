@@ -1,5 +1,7 @@
 export default async function handler(req, res) {
-    if (req.method !== 'POST') {
+    if (req.method == 'POST') {
+        res.status(200).json({ uploadSpeed: 100 }); // Dummy response for testing
+  } else {
       res.status(405).json({ error: 'Method not allowed' });
       return;
     }

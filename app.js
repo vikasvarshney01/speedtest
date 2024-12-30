@@ -23,10 +23,11 @@ document.getElementById('runTest').addEventListener('click', async () => {
       // Measure upload speed
       const uploadStart = performance.now();
       const dataToUpload = new Blob([new ArrayBuffer(2 * 1024 * 1024)]); // 2 MB of data
-      const uploadResponse = await fetch('/api/upload', {
+      const uploadResponse = await fetch('https://your-project-name.vercel.app/api/upload', {
         method: 'POST',
         body: dataToUpload,
       });
+      
       const uploadEnd = performance.now();
       const uploadData = await uploadResponse.json();
   
